@@ -6,8 +6,6 @@ const HomePage = () => {
   const [movies, setMovies] = useState();
   const [error, setError] = useState();
 
-  console.log(movies);
-
   useEffect(() => {
     const onFetchMovies = async () => {
       try {
@@ -27,7 +25,11 @@ const HomePage = () => {
       {movies && (
         <ul>
           {movies.map(movie => {
-            return <li key={movie.id}><Link to={`/movies/${movie.id}`}>{movie.title}</Link></li>;
+            return (
+              <li key={movie.id}>
+                <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+              </li>
+            );
           })}
         </ul>
       )}

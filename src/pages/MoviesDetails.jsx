@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { fetchMoviesDetails } from 'fetch/FetchApi';
 import { Link } from 'react-router-dom';
+import MovieCard from 'components/MovieCard/MovieCard';
+import { BiArrowBack } from 'react-icons/bi';
 
 const MoviesDetails = () => {
   const [moviesCard, setMoviesCard] = useState();
@@ -12,7 +14,6 @@ const MoviesDetails = () => {
     const moviesDetails = async () => {
       try {
         const data = await fetchMoviesDetails(moviesId);
-        console.log(data);
         setMoviesCard(data);
       } catch (error) {
         setError(error.message);
@@ -23,30 +24,24 @@ const MoviesDetails = () => {
 
   return (
     <>
-      <button type="button">
-        {' '}
-        <Link to={`/`}>Back to homepage</Link>{' '}
-      </button>
+      <Link to={`/`}>
+        <button style={{ marginBottom: '20px' }}>
+          <BiArrowBack />
+          Back to homepage</button>
+      </Link>
+
       {error && <h2>{error}</h2>}
-      {moviesCard && (
-        <div>
-          <img
-            src={`https://image.tmdb.org/t/p/w500${moviesCard.poster_path}`}
-            alt={`${moviesCard.title}`}
-            width={300}
-          />
-          <div>
-            <h3>{moviesCard.title}</h3>
-            <p>User Score: </p>
-            <h4>Overview</h4>
-            <p>{moviesCard.overview}</p>
-            <h4>Genres</h4>
-            {moviesCard.genres.map(genres => {
-              return <p key={genres.id}>{genres.name}</p>;
-            })}
-          </div>
-        </div>
-      )}
+      {moviesCard && <MovieCard moviesCard={moviesCard} />}
+      <h3>Additional information</h3>
+      <ul>
+        <li>
+          <Link to='cast'>Cast</Link>
+        </li>
+        <li>
+          <Link to='reviews'>Reviews</Link>
+        </li>
+      </ul>
+      <Outlet />
     </>
   );
 };

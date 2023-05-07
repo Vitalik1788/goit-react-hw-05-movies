@@ -9,9 +9,17 @@ export const fetchTrandingMovies = async () => {
   return response.data;
 };
 
-export const fetchMoviesDetails = async (moviesId) => {
+export const fetchMoviesDetails = async moviesId => {
   const response = await axios.get(
     `/3/movie/${moviesId}?api_key=${API_KEY}&language=en-US`
   );
+  return response.data;
+};
+
+export const fetchCast = async moviesId => {
+  const response = await axios.get(
+    `3/movie/${moviesId}/credits?api_key=${API_KEY}&language=en-US`
+  );
+
   return response.data;
 };

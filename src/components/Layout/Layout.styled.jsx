@@ -6,7 +6,7 @@ export const NavList = styled.ul`
   list-style: none;
   display: flex;
   gap: 30px;
-
+  padding: 0;
 `
 const navLink = NavLink;
 export const LinkStyle = styled(navLink)`
