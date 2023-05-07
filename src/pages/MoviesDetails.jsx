@@ -32,6 +32,8 @@ const MoviesDetails = () => {
 
       {error && <h2>{error}</h2>}
       {moviesCard && <MovieCard moviesCard={moviesCard} />}
+      {!error && (
+      <>
       <h3>Additional information</h3>
       <ul>
         <li>
@@ -40,7 +42,9 @@ const MoviesDetails = () => {
         <li>
           <Link to='reviews'>Reviews</Link>
         </li>
-      </ul>
+          </ul>
+      </>)}
+      
       <Outlet />
     </>
   );

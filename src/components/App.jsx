@@ -5,6 +5,7 @@ import { Container } from './App/App.styled';
 import Layout from './Layout/Layout';
 import Cast from './Cast/Cast';
 import Reviews from './Reviews/Reviews';
+import MoviesSearchForm from 'pages/MoviesSearch';
 
 const App = () => {
   return (
@@ -12,7 +13,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="movies" element={<div> search form</div>} />
+          <Route path="movies" element={<MoviesSearchForm />} />
           <Route path="movies/:moviesId" element={<MoviesDetails />}>
             <Route path='cast' element={<Cast />} />
             <Route path='reviews' element={<Reviews />} />
