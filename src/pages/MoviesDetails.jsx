@@ -33,9 +33,18 @@ const MoviesDetails = () => {
           <img
             src={`https://image.tmdb.org/t/p/w500${moviesCard.poster_path}`}
             alt={`${moviesCard.title}`}
-            width={300}            
+            width={300}
           />
-          <h3>{moviesCard.title}</h3>
+          <div>
+            <h3>{moviesCard.title}</h3>
+            <p>User Score: </p>
+            <h4>Overview</h4>
+            <p>{moviesCard.overview}</p>
+            <h4>Genres</h4>
+            {moviesCard.genres.map(genres => {
+              return <p key={genres.id}>{genres.name}</p>;
+            })}
+          </div>
         </div>
       )}
     </>
