@@ -1,5 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { NavList, LinkStyle } from './Layout.styled';
+import { Suspense } from "react";
+import Spiner from "components/Spiner/Spiner";
 
 const Layout = () => {
   return (
@@ -12,7 +14,10 @@ const Layout = () => {
           <LinkStyle to="/movies">Movies</LinkStyle>
         </li>
       </NavList>
-      <Outlet />
+      <Suspense fallback={<Spiner />}>
+        <Outlet />
+      </Suspense>
+      
     </>
   );
 }

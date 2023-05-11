@@ -1,11 +1,22 @@
 import { fetchSearchMovie } from 'fetch/FetchApi';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 const MoviesSearchForm = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
   const [foundMovies, setFoundMovies] = useState([]);
   const [error, setError] = useState();
+
+  const searchQuery = searchParams.get('query') ?? '';
+  const location = useLocation();
+
+  const updateQueryString = e => {
+    const queryValue = e.currentTarget.value;
+    if (queryValue.trim() === '') {
+      return setSearchParams({});
+    }
+    setSearchParams({ query: queryValue.toLowerCase() });
+  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -20,6 +31,8 @@ const MoviesSearchForm = () => {
     }
   };
 
+  console.log(location);
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -29,19 +42,22 @@ const MoviesSearchForm = () => {
           autoFocus
           value={searchQuery}
           placeholder="Enter movie name"
-          onChange={e => setSearchQuery(e.currentTarget.value.toLowerCase())}
+          onChange={updateQueryString}
         />
         <button type="submit">Search</button>
       </form>
       {error && <h3>{error}</h3>}
-      {foundMovies && (<ul>
-        {foundMovies.map(movie => {
-          return (
-            <li key={movie.id}>
-              <Link to={`${movie.id}`}>{movie.title}</Link>
-            </li>
-          );})}
-      </ul>)       }
+      {foundMovies && (
+        <ul>
+          {foundMovies.map(movie => {
+            return (
+              <li key={movie.id}>
+                <Link to={`${movie.id}`} state={{from: location}}>{movie.title}</Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </>
   );
 };

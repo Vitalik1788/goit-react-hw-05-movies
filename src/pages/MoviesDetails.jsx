@@ -1,20 +1,22 @@
-import { useEffect, useState } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { useEffect, useState, Suspense } from 'react';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { fetchMoviesDetails } from 'fetch/FetchApi';
+import { BiArrowBack } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import MovieCard from 'components/MovieCard/MovieCard';
-import { BiArrowBack } from 'react-icons/bi';
+import Spiner from 'components/Spiner/Spiner';
 
 const MoviesDetails = () => {
   const [moviesCard, setMoviesCard] = useState();
   const [error, setError] = useState();
   const { moviesId } = useParams();
-
+  const location = useLocation();
+  
   useEffect(() => {
     const moviesDetails = async () => {
-      try {
+      try {        
         const data = await fetchMoviesDetails(moviesId);
-        setMoviesCard(data);
+        setMoviesCard(data);        
       } catch (error) {
         setError(error.message);
       }
@@ -22,30 +24,35 @@ const MoviesDetails = () => {
     moviesDetails();
   }, [moviesId]);
 
+  console.log(location);
+
   return (
     <>
-      <Link to={`/`}>
-        <button style={{ marginBottom: '20px' }}>
-          <BiArrowBack />
-          Back to homepage</button>
-      </Link>
-
       {error && <h2>{error}</h2>}
+      {<Link to={location.state?.from}>
+          <button type='button' style={{ marginBottom: '20px' }}>
+            <BiArrowBack />
+            Go back
+          </button>
+        </Link>
+      }
       {moviesCard && <MovieCard moviesCard={moviesCard} />}
       {!error && (
-      <>
-      <h3>Additional information</h3>
-      <ul>
-        <li>
-          <Link to='cast'>Cast</Link>
-        </li>
-        <li>
-          <Link to='reviews'>Reviews</Link>
-        </li>
+        <>
+          <h3>Additional information</h3>
+          <ul>
+            <li>
+              <Link to="cast">Cast</Link>
+            </li>
+            <li>
+              <Link to="reviews">Reviews</Link>
+            </li>
           </ul>
-      </>)}
-      
-      <Outlet />
+        </>
+      )}
+      <Suspense fallback={<Spiner />}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };

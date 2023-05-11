@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { fetchTrandingMovies } from 'fetch/FetchApi';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const HomePage = () => {
   const [movies, setMovies] = useState();
   const [error, setError] = useState();
+  const location = useLocation()
 
   useEffect(() => {
     const onFetchMovies = async () => {
@@ -27,7 +28,7 @@ const HomePage = () => {
           {movies.map(movie => {
             return (
               <li key={movie.id}>
-                <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+                <Link to={`/movies/${movie.id}`} state={{ from: location}}>{movie.title}</Link>
               </li>
             );
           })}
