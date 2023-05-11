@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense, useRef } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { fetchMoviesDetails } from 'fetch/FetchApi';
 import { BiArrowBack } from 'react-icons/bi';
@@ -11,6 +11,7 @@ const MoviesDetails = () => {
   const [error, setError] = useState();
   const { moviesId } = useParams();
   const location = useLocation();
+  const backLinkLocation = useRef(location.state?.from ?? '/movies');
   
   useEffect(() => {
     const moviesDetails = async () => {
@@ -29,8 +30,9 @@ const MoviesDetails = () => {
   return (
     <>
       {error && <h2>{error}</h2>}
-      {<Link to={location.state?.from}>
-          <button type='button' style={{ marginBottom: '20px' }}>
+      {
+        <Link to={backLinkLocation.current}>
+          <button type="button" style={{ marginBottom: '20px' }}>
             <BiArrowBack />
             Go back
           </button>
