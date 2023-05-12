@@ -25,8 +25,6 @@ const MoviesDetails = () => {
     moviesDetails();
   }, [moviesId]);
 
-  console.log(location);
-
   return (
     <>
       {error && <h2>{error}</h2>}

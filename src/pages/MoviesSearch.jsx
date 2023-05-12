@@ -1,5 +1,5 @@
 import { fetchSearchMovie } from 'fetch/FetchApi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 const MoviesSearchForm = () => {
@@ -18,7 +18,22 @@ const MoviesSearchForm = () => {
     setSearchParams({ query: queryValue.toLowerCase() });
   };
 
-  const handleSubmit = async e => {
+  useEffect(() => {
+    if (searchParams === '') {
+      return;
+    }
+    const userMoviesList = async () => {
+      try {
+        const data = await fetchSearchMovie(searchQuery);
+        setFoundMovies(data.results);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+    userMoviesList();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (searchQuery.trim() === '') {
       return;
@@ -29,9 +44,7 @@ const MoviesSearchForm = () => {
     } catch (error) {
       setError(error.message);
     }
-  };
-
-  console.log(location);
+  }; 
 
   return (
     <>
@@ -52,7 +65,9 @@ const MoviesSearchForm = () => {
           {foundMovies.map(movie => {
             return (
               <li key={movie.id}>
-                <Link to={`${movie.id}`} state={{from: location}}>{movie.title}</Link>
+                <Link to={`${movie.id}`} state={{ from: location }}>
+                  {movie.title}
+                </Link>
               </li>
             );
           })}

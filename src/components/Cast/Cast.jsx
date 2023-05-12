@@ -6,7 +6,6 @@ import { CastContainer, CastCard } from './Cast.styled';
 const Cast = () => {
   const [casts, setCasts] = useState(null);
   const [error, setError] = useState('');
-
   const { moviesId } = useParams();
 
   useEffect(() => {
@@ -17,7 +16,6 @@ const Cast = () => {
     const getCasts = async () => {
       try {
         const data = await fetchCast(moviesId);
-        console.log(data.cast);
         setCasts(data.cast);
       } catch (error) {
         setError(error);
@@ -25,7 +23,6 @@ const Cast = () => {
     };
     getCasts();
   }, [moviesId]);
-  
 
   return (
     <>
@@ -34,18 +31,20 @@ const Cast = () => {
         <CastContainer>
           {casts.map(cast => {
             return (
-              cast.profile_path && cast.profile_path !== null && (
-              <CastCard key={cast.cast_id}>      
-                    <img
-                      src={`https://image.tmdb.org/t/p/w500${cast.profile_path}`}
-                      alt={`${cast.name}`}
-                      width={200}
-                      loading="lazy"
-                    />
-                    <p>{cast.name}</p>
-                    <p>Character: {cast.character}</p>                
-              </CastCard>
-            ))
+              cast.profile_path &&
+              cast.profile_path !== null && (
+                <CastCard key={cast.cast_id}>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${cast.profile_path}`}
+                    alt={`${cast.name}`}
+                    width={200}
+                    loading="lazy"
+                  />
+                  <p>{cast.name}</p>
+                  <p>Character: {cast.character}</p>
+                </CastCard>
+              )
+            );
           })}
         </CastContainer>
       )}

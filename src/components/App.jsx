@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 import { Container } from './App/App.styled';
 import Layout from './Layout/Layout';
+import WrongPath from 'pages/WrongPath/WrongPath';
 
 const HomePage = lazy(() => import('../pages/Home'));
 const MoviesSearchForm = lazy(() => import('../pages/MoviesSearch'));
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="cast" element={<Cast />} />
             <Route path="reviews" element={<Reviews />} />
           </Route>
+          <Route path='*' element={<WrongPath />} />
         </Route>
       </Routes>
     </Container>
