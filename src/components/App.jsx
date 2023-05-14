@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 import { Container } from './App/App.styled';
 import Layout from './Layout/Layout';
-import WrongPath from 'pages/WrongPath/WrongPath';
+import WrongPath from 'pages/WrongPath';
 
 const HomePage = lazy(() => import('../pages/Home'));
 const MoviesSearchForm = lazy(() => import('../pages/MoviesSearch'));

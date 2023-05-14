@@ -1,4 +1,5 @@
 import { CardContainer, CardText, GenresList } from './MovieCard.styled';
+import PropTypes from 'prop-types';
 
 const MovieCard = ({ moviesCard }) => {
   const { release_date, poster_path, title, overview, genres, vote_average } =
@@ -32,6 +33,17 @@ const MovieCard = ({ moviesCard }) => {
       </CardContainer>
     </>
   );
+};
+
+MovieCard.propTypes = {
+  moviesCard: PropTypes.shape({
+    release_date: PropTypes.string.isRequired,
+    poster_path: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    overview: PropTypes.string.isRequired,
+    genres: PropTypes.arrayOf(PropTypes.object),
+    vote_average: PropTypes.number.isRequired,
+  }),
 };
 
 export default MovieCard;
