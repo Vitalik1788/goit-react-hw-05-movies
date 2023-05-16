@@ -31,20 +31,22 @@ const Cast = () => {
         <CastContainer>
           {casts.map(cast => {
             return (
-              cast.profile_path &&
-              cast.profile_path !== null && (
-                <CastCard key={cast.cast_id}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${cast.profile_path}`}
-                    alt={`${cast.name}`}
-                    width={200}
-                    loading="lazy"
-                  />
-                  <p>{cast.name}</p>
-                  <p>Character: {cast.character}</p>
-                </CastCard>
-              )
+              <CastCard key={cast.cast_id}>
+                <img
+                  src={
+                    cast.profile_path !== null
+                      ? `https://image.tmdb.org/t/p/w500${cast.profile_path}`
+                      : 'https://i.pinimg.com/originals/a0/57/48/a05748c84d7093e382c560bbc57665ce.jpg'
+                  }
+                  alt={`${cast.name}`}
+                  width={200}
+                  loading="lazy"
+                />
+                <p>{cast.name}</p>
+                <p>Character: {cast.character}</p>
+              </CastCard>
             );
+            
           })}
         </CastContainer>
       )}

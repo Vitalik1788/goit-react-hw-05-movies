@@ -2,7 +2,7 @@ import { CardContainer, CardText, GenresList } from './MovieCard.styled';
 import PropTypes from 'prop-types';
 
 const MovieCard = ({ moviesCard }) => {
-  const { release_date, poster_path, title, overview, genres, vote_average } =
+  const { release_date, poster_path, title, overview, genres, vote_average, original_title } =
     moviesCard;
   const year = new Date(release_date);
   let releaseDate = year.getFullYear();
@@ -12,13 +12,17 @@ const MovieCard = ({ moviesCard }) => {
     <>
       <CardContainer>
         <img
-          src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-          alt={`${title}`}
+          src={
+            poster_path
+              ? `https://image.tmdb.org/t/p/w500${poster_path}`
+              : 'https://i.pinimg.com/originals/a0/57/48/a05748c84d7093e382c560bbc57665ce.jpg'
+          }
+          alt={`${title && original_title}`}
           width={400}
         />
         <CardText>
           <h1>
-            {title} ({releaseDate})
+            {original_title && title} ({releaseDate})
           </h1>
           <p>User Score: {moviesRating}% </p>
           <h2>Overview</h2>
@@ -38,8 +42,8 @@ const MovieCard = ({ moviesCard }) => {
 MovieCard.propTypes = {
   moviesCard: PropTypes.shape({
     release_date: PropTypes.string.isRequired,
-    poster_path: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
+    poster_path: PropTypes.string,
+    title: PropTypes.string,
     overview: PropTypes.string.isRequired,
     genres: PropTypes.arrayOf(PropTypes.object),
     vote_average: PropTypes.number.isRequired,

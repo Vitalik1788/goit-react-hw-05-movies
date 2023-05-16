@@ -54,11 +54,15 @@ const MoviesSearchForm = () => {
               <li key={movie.id}>
                 <Link to={`${movie.id}`} state={{ from: location }}>
                   <img
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={`${movie.title}`}
+                    src={
+                      movie.poster_path !== null
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : 'https://i.pinimg.com/originals/a0/57/48/a05748c84d7093e382c560bbc57665ce.jpg'
+                    }
+                    alt={`${movie.title && movie.original_title}`}
                     width={200}
                   />
-                  <p>{movie.title}</p>
+                  <p>{movie.title && movie.original_title}</p>
                 </Link>
               </li>
             );
