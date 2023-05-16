@@ -7,11 +7,11 @@ import MovieCard from 'components/MovieCard/MovieCard';
 import Spiner from 'components/Spiner/Spiner';
 
 const MoviesDetails = () => {
-  const [moviesCard, setMoviesCard] = useState();
-  const [error, setError] = useState();
+  const [moviesCard, setMoviesCard] = useState(null);
+  const [error, setError] = useState('');
   const { moviesId } = useParams();
   const location = useLocation();
-  const backLinkLocation = useRef(location.state?.from ?? '/movies');
+  const backLinkLocation = useRef(location.state?.from ?? '/');
   
   useEffect(() => {
     const moviesDetails = async () => {

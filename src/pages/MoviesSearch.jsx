@@ -5,24 +5,16 @@ import { Link, useLocation, useSearchParams } from 'react-router-dom';
 const MoviesSearchForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [foundMovies, setFoundMovies] = useState([]);
-  const [error, setError] = useState();
-
+  const [inputValue, setInputValue] = useState('');
+  const [error, setError] = useState('');
   const searchQuery = searchParams.get('query') ?? '';
   const location = useLocation();
 
-  const updateQueryString = e => {
-    const queryValue = e.currentTarget.value;
-    if (queryValue.trim() === '') {
-      return setSearchParams({});
-    }
-    setSearchParams({ query: queryValue.toLowerCase() });
-  };
-
   useEffect(() => {
-    if (searchParams === '') {
+    if (searchQuery === '') {
       return;
     }
-    const userMoviesList = async () => {
+    const userMoviesList = async e => {
       try {
         const data = await fetchSearchMovie(searchQuery);
         setFoundMovies(data.results);
@@ -31,21 +23,15 @@ const MoviesSearchForm = () => {
       }
     };
     userMoviesList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [searchQuery]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (searchQuery.trim() === '') {
-      return;
+    if (inputValue.trim() === '') {
+      return setSearchParams({});
     }
-    try {
-      const data = await fetchSearchMovie(searchQuery);
-      setFoundMovies(data.results);
-    } catch (error) {
-      setError(error.message);
-    }
-  }; 
+    setSearchParams({ query: inputValue.toLowerCase() });
+  };
 
   return (
     <>
@@ -54,9 +40,9 @@ const MoviesSearchForm = () => {
           type="text"
           autoComplete="off"
           autoFocus
-          value={searchQuery}
+          value={inputValue}
           placeholder="Enter movie name"
-          onChange={updateQueryString}
+          onChange={e => setInputValue(e.currentTarget.value)}
         />
         <button type="submit">Search</button>
       </form>
@@ -67,7 +53,12 @@ const MoviesSearchForm = () => {
             return (
               <li key={movie.id}>
                 <Link to={`${movie.id}`} state={{ from: location }}>
-                  {movie.title}
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={`${movie.title}`}
+                    width={200}
+                  />
+                  <p>{movie.title}</p>
                 </Link>
               </li>
             );

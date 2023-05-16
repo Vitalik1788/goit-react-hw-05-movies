@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { fetchTrandingMovies } from 'fetch/FetchApi';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import MoviesList from 'components/MoviesList/MoviesList';
 
 const HomePage = () => {
-  const [movies, setMovies] = useState();
-  const [error, setError] = useState();
-  const location = useLocation()
+  const [movies, setMovies] = useState(null);
+  const [error, setError] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
     const onFetchMovies = async () => {
@@ -23,17 +24,7 @@ const HomePage = () => {
     <>
       <h1>Trending today</h1>
       {error && <div>{error}</div>}
-      {movies && (
-        <ul>
-          {movies.map(movie => {
-            return (
-              <li key={movie.id}>
-                <Link to={`/movies/${movie.id}`} state={{ from: location}}>{movie.title}</Link>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      {movies && <MoviesList movies={movies} location={location}/> }
     </>
   );
 };
