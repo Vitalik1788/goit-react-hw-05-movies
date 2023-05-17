@@ -4,8 +4,7 @@ import { useParams } from 'react-router-dom';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
-  const [error, setError] = useState();
-
+  const [error, setError] = useState('');
   const { moviesId } = useParams();
 
   useEffect(() => {
@@ -16,7 +15,6 @@ const Reviews = () => {
       try {
         const data = await fetchMovieReview(moviesId);
         setReviews(data.results);
-        console.log(data.results);
       } catch (error) {
         setError(error.message);
       }

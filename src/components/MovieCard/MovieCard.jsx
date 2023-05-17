@@ -2,8 +2,15 @@ import { CardContainer, CardText, GenresList } from './MovieCard.styled';
 import PropTypes from 'prop-types';
 
 const MovieCard = ({ moviesCard }) => {
-  const { release_date, poster_path, title, overview, genres, vote_average, original_title } =
-    moviesCard;
+  const {
+    release_date,
+    poster_path,
+    title,
+    overview,
+    genres,
+    vote_average,
+    original_title,
+  } = moviesCard;
   const year = new Date(release_date);
   let releaseDate = year.getFullYear();
   let moviesRating = Math.round(Number(`${vote_average}`) * 10);

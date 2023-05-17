@@ -76,7 +76,7 @@ MoviesList.propTypes = {
   ),
   movieSearchLocation: PropTypes.shape({
     pathname: PropTypes.string,
-  })
+  }),
 };
 
 export default MoviesList;
