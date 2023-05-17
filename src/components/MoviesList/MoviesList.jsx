@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { MovieList, MovieItem } from './MoviesList.styles';
 
 const MoviesList = ({ movies, location, foundMovies, movieSearchLocation }) => {
@@ -51,6 +52,31 @@ const MoviesList = ({ movies, location, foundMovies, movieSearchLocation }) => {
       )}
     </>
   );
+};
+
+MoviesList.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      poster_path: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      original_title: PropTypes.string.isRequired,
+    })
+  ),
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }),
+  foundMovies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      poster_path: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      original_title: PropTypes.string.isRequired,
+    })
+  ),
+  movieSearchLocation: PropTypes.shape({
+    pathname: PropTypes.string,
+  })
 };
 
 export default MoviesList;
