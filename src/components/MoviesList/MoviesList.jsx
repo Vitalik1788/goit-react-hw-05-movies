@@ -28,7 +28,7 @@ const MoviesList = ({ movies }) => {
             );
           })}
         </MovieList>
-      )}      
+      )}
     </>
   );
 };
@@ -42,20 +42,6 @@ MoviesList.propTypes = {
       original_title: PropTypes.string.isRequired,
     })
   ),
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
-  }),
-  foundMovies: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      poster_path: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      original_title: PropTypes.string.isRequired,
-    })
-  ),
-  movieSearchLocation: PropTypes.shape({
-    pathname: PropTypes.string,
-  }),
 };
 
 export default MoviesList;
